@@ -3,12 +3,8 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
-            Formulário de Tweet
-        </div>
-        <div class="col-md-8">
-            Linhas do tempo
-        </div>
+        <form-component></form-component>
+        <timeline-component></timeline-component>
     </div>
 </div>
 @endsection

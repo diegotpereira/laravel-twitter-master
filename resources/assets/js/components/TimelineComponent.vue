@@ -5,7 +5,7 @@
           <img class="mr-3"/>
           <div class="media-body">
               <div class="mt-3">
-                  <a href="#">{{postagem.user.name}}</a>
+                  <a href="postagem.user.profileLink">{{postagem.user.name}}</a> | {{postagem.createdDate}}
               </div>
               <p>{{postagem.body}}</p>
           </div>
@@ -16,6 +16,7 @@
 <script>
 import Event from '../event.js';
 export default {
+
     data() {
         return {
             postagens:[],
@@ -24,6 +25,10 @@ export default {
     },
 
     mounted() {
+        axios.get('/postagens').then((resp => {
+            this.postagens = resp.data;
+        }));
+        
         Event.$on('added_tweet', (postagem) => {
             this.postagens.unshift(postagem);
         });

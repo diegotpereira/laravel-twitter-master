@@ -28,7 +28,7 @@ export default {
     methods: {
         salvarTweet() {
             axios.post('/tweet/salvar', {body: this.body}).then(res => {
-                console.log(res.data);
+                this.postagemData = res.data;
                 Event.$emit('added_tweet', this.postagemData);
             }).catch(e => {
                 console.log(e);

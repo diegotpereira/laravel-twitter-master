@@ -32,17 +32,51 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $appends = ['profileLink'];
 
     public function postagens() {
 
-        return $this->hasMany(Postagens::class);
+        return $this->hasMany(Postagem::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
+    public function getProfileLinkAttribute()
+    {
+        return route('user.show', $this);
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'seguidores', 'user_id', 'follower_id');
+    }
+
+    public function isNot($user)
+    {
+        return $this->id !== $user->id;
+    }
+
+    public function isFollowing($user)
+    {
+        return (bool) $this->following->where('id', $user->id)->count();
+    }
+
+    public function canFollow($user)
+    {
+        if (!$this->isNot($user)) {
+            # code...
+
+            return false;
+        }
+
+        return !$this->isFollowing($user);
+    }
+
+    public function canUnFollow($user)
+    {
+        return $this->isFollowing($user);
     }
 }

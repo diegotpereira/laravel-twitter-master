@@ -13,13 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::post('tweet/salvar', [App\Http\Controllers\PostagensController::class]);
+Route::post('tweet/salvar', 'PostagensController@store');
+
+Route::get('users/{user}', 'UserController@show')->name('user.show');
+
+Route::get('users/{user}/follow', 'UserController@follow')->name('user.follow');
+
+Route::get('users/{user}/unfollow', 'UserController@unfollow')->name('user.unfollow');
+
+Route::get('postagens', 'PostagensController@index')->name('postagens.index');

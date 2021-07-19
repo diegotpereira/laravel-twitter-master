@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostagemsTable extends Migration
+class CreatePostagensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreatePostagemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('postagems', function (Blueprint $table) {
+        Schema::create('postagens', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('body', 130);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +30,6 @@ class CreatePostagemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('postagems');
+        Schema::dropIfExists('postagens');
     }
 }
